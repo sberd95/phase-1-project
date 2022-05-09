@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Night</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="index.js"></script>
+</head>
+
+<header>
+    <h1>Welcome to Trivia Night!</h1>
+    <div>Use the form below to customize your questions</div>
+    <form id='quizmaker' action="" method="GET">
+        <label for="questionNum">Number of Questions?</label>
+        <input type="number" value="10" id="numQuestions">
+    </form>
+    <input type="button" id="questionSkip" value="I hate reading!"></input>
+</header>
+
+<body>
+    <h2>Your Trivia Questions:</h2>
+    <h3>Placeholder Question</h3>
+    <form id="questionMulti" class="hidden" action="" method="POST">
+        <div id="divA">
+            <label id="optionA" for="A">Example A</label>
+            <input id="radioA" name="radioMulti" type="radio">
+        </div>
+        <div id="divB">
+            <label id="optionB" for="B">Example B</label>
+            <input id="radioB" name="radioMulti" type="radio">
+        </div>
+        <div id="divC">
+            <label id="optionC" for="C">Example C</label>
+            <input id="radioC" name="radioMulti" type="radio">
+        </div>
+        <div id="divD">
+            <label id="optionD" for="D">Example D</label>
+            <input id="radioD" name="radioMulti" type="radio">
+        </div>
+        <input id="submitMulti" type="submit">
+    </form>
+
+    <form id="questionTF" class="hidden" action="" method="POST">
+        <div id="divT">
+            <label id="optionT" for="optionT">Example True</label>
+            <input id="radioT" name="radioTF" type="radio">
+        </div>
+        <div id="divF">
+            <label id="optionF" for="optionF">Example False</label>
+            <input id="radioF" name="radioTF" type="radio">
+        </div>
+        <input id="submitTF" type="submit">
+    </form>
+</body>
+
+</html>
