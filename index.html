@@ -21,23 +21,23 @@
 </header>
 
 <body>
-    <h2>Your Trivia Questions:</h2>
-    <h3>Placeholder Question</h3>
+    <h2>Your Trivia Question:</h2>
+    <h3 id="currentQuestion">Placeholder Question</h3>
     <form id="questionMulti" class="hidden" action="" method="POST">
         <div id="divA">
-            <label id="optionA" for="A">Example A</label>
+            <label id="optionA" for="radioA">Example A</label>
             <input id="radioA" name="radioMulti" type="radio">
         </div>
         <div id="divB">
-            <label id="optionB" for="B">Example B</label>
+            <label id="optionB" for="radioB">Example B</label>
             <input id="radioB" name="radioMulti" type="radio">
         </div>
         <div id="divC">
-            <label id="optionC" for="C">Example C</label>
+            <label id="optionC" for="radioC">Example C</label>
             <input id="radioC" name="radioMulti" type="radio">
         </div>
         <div id="divD">
-            <label id="optionD" for="D">Example D</label>
+            <label id="optionD" for="radioD">Example D</label>
             <input id="radioD" name="radioMulti" type="radio">
         </div>
         <input id="submitMulti" type="submit">
@@ -45,15 +45,17 @@
 
     <form id="questionTF" class="hidden" action="" method="POST">
         <div id="divT">
-            <label id="optionT" for="optionT">Example True</label>
+            <label id="optionT" for="radioT">True</label>
             <input id="radioT" name="radioTF" type="radio">
         </div>
         <div id="divF">
-            <label id="optionF" for="optionF">Example False</label>
+            <label id="optionF" for="radioF">False</label>
             <input id="radioF" name="radioTF" type="radio">
         </div>
         <input id="submitTF" type="submit">
     </form>
+    <div id="answerMessage"></div>
+    <input id="nextQuestion" type="button" value="Next Question" class="hidden">
 </body>
 
 </html>
