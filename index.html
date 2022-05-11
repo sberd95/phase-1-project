@@ -6,12 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia Night</title>
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
     <script defer src="index.js"></script>
 </head>
 
-<header>
-    <h1>Welcome to Trivia Night!</h1>
+<header class="bg-secondary mb-1">
+    <h4>Welcome to Trivia Night!</h4>
     <div>Use the form below to customize your questions</div>
     <form id='quizmaker' action="" method="GET">
         <label for="questionNum">Number of Questions?</label>
@@ -20,42 +23,59 @@
     <input type="button" id="questionSkip" value="I hate reading!"></input>
 </header>
 
-<body>
-    <h2>Your Trivia Question:</h2>
-    <h3 id="currentQuestion">Placeholder Question</h3>
-    <form id="questionMulti" class="hidden" action="" method="POST">
-        <div id="divA">
-            <label id="optionA" for="radioA">Example A</label>
-            <input id="radioA" name="radioMulti" type="radio">
+<body class="bg-dark">
+    <h3 id="numQuestion" class="text-center d-block w-50 p-2 m-auto bg-info border border-info rounded-pill">Use the menu above or the quick-button to start your quiz!</h3>
+    <h2 id="currentQuestion" class="d-none text-center m-1 p-1 bg-primary border border-primary rounded"></h2>
+    <form id="questionMulti" class="d-none" action="" method="POST">
+        <div class="row">
+            <div class="col form-group text-center m-2 p-2 bg-warning" id="divA">
+                <label id="optionA" class="form-check-label" for="radioA">Example A</label>
+                <input id="radioA" class="form-control form-check w-25 h-auto mx-auto" name="radioMulti" type="radio">
+            </div>
+            <div class="col form-group text-center m-2 p-2 bg-warning" id="divB">
+                <label id="optionB" class="form-check-label" for="radioB">Example B</label>
+                <input id="radioB" class="form-control form-check w-25 h-auto mx-auto" name="radioMulti" type="radio">
+            </div>
         </div>
-        <div id="divB">
-            <label id="optionB" for="radioB">Example B</label>
-            <input id="radioB" name="radioMulti" type="radio">
+        <div class="row">
+            <div class="col form-group text-center m-2 p-2 bg-warning" id="divC">
+                <label id="optionC" class="form-check-label" for="radioC">Example C</label>
+                <input id="radioC" class="form-control form-check w-25 h-auto mx-auto" name="radioMulti" type="radio">
+            </div>
+            <div class="col form-group text-center m-2 p-2 bg-warning" id="divD">
+                <label id="optionD" class="form-check-label" for="radioD">Example D</label>
+                <input id="radioD" class="form-control form-check w-25 h-auto mx-auto" name="radioMulti" type="radio">
+            </div>
         </div>
-        <div id="divC">
-            <label id="optionC" for="radioC">Example C</label>
-            <input id="radioC" name="radioMulti" type="radio">
-        </div>
-        <div id="divD">
-            <label id="optionD" for="radioD">Example D</label>
-            <input id="radioD" name="radioMulti" type="radio">
-        </div>
-        <input id="submitMulti" type="submit">
+        <input id="submitMulti" class="d-block m-auto" type="submit">
     </form>
 
-    <form id="questionTF" class="hidden" action="" method="POST">
-        <div id="divT">
-            <label id="optionT" for="radioT">True</label>
-            <input id="radioT" name="radioTF" type="radio">
+    <form id="questionTF" class="d-none" action="" method="POST">
+        <div class="row">
+            <div id="divT" class="col form-group text-center m-2 p-2 bg-warning">
+                <label id="optionT" class="form-check-label" for="radioT">True</label>
+                <input id="radioT" class="form-control form-check w-25 h-auto mx-auto" name="radioTF" type="radio">
+            </div>
+            <div id="divF" class="col form-group text-center m-2 p-2 bg-warning">
+                <label id="optionF" class="form-check-label" for="radioF">False</label>
+                <input id="radioF" class="form-control form-check w-25 h-auto mx-auto" name="radioTF" type="radio">
+            </div>
         </div>
-        <div id="divF">
-            <label id="optionF" for="radioF">False</label>
-            <input id="radioF" name="radioTF" type="radio">
-        </div>
-        <input id="submitTF" type="submit">
+        <input id="submitTF" class="d-block m-auto" type="submit">
     </form>
     <div id="answerMessage"></div>
-    <input id="nextQuestion" type="button" value="Next Question" class="hidden">
+    <input id="nextQuestion" class="d-none m-auto" type="button" value="Next Question" class="d-none">
+    <input id="getResults" class="d-none m-auto" type="button" value="Get Final Score" class="d-none">
+    <!-- bootstrap scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

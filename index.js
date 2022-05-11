@@ -26,10 +26,12 @@ document.querySelector('#questionMulti').addEventListener('submit', e => {
     for (const btn of radioButtons) {
         console.log('current radio button: ', btn, btn.checked)
         if (btn.checked) {
-            document.getElementById('submitMulti').classList.add('hidden')
             debugger
             console.log('siblings of the current button: ', btn.parentNode.childNodes)
             console.log('selected: ', btn.parentNode.children[0].innerText, 'answer: ', qCorrect )
+            
+            document.getElementById('submitMulti').classList.remove('d-block')
+            document.getElementById('submitMulti').classList.add('d-none')
             if (btn.parentNode.children[0].innerText === qCorrect) {
                 return correctAnswer()
             }
@@ -39,48 +41,13 @@ document.querySelector('#questionMulti').addEventListener('submit', e => {
         }
     }
     return errorMessage()
-    // if (radioA.checked === 'true') {
-    //     if (multiA.innerText === qCorrect) {
-    //         correctAnswer()
-    //     }
-    //     else {
-    //         wrongAnswer()
-    //     }
-    // }
-    // else if (radioB.checked === 'true') {
-    //     if (multiB.innerText === qCorrect) {
-    //         correctAnswer()
-    //     }
-    //     else {
-    //         wrongAnswer()
-    //     }
-    // }
-    // else if (radioC.checked === 'true') {
-    //     if (multiC.innerText === qCorrect) {
-    //         correctAnswer()
-    //     }
-    //     else {
-    //         wrongAnswer()
-    //     }
-    // }   
-    // else if (radioD.checked === 'true') {
-    //     if (multiD.innerText === qCorrect) {
-    //         correctAnswer()
-    //     }
-    //     else {
-    //         wrongAnswer()
-    //     }
-    // }
-    // else {
-    //     errorMessage()
-    // }
 })
 
 document.querySelector('#questionTF').addEventListener('submit', e => {
     e.preventDefault()
-    if (radioT.checked === 'true') {
-        document.querySelector('#submitTF').classList.add('hidden')
-
+    if (radioT.checked) {
+        document.getElementById('submitTF').classList.remove('d-block')
+        document.getElementById('submitTF').classList.add('d-none')
         if (boolT.innerText === qCorrect) {
             correctAnswer()
         }
@@ -88,9 +55,9 @@ document.querySelector('#questionTF').addEventListener('submit', e => {
             wrongAnswer()
         }
     }   
-    else if (radioF.checked === 'true') {
-        document.querySelector('#submitTF').classList.add('hidden')
-
+    else if (radioF.checked) {
+        document.getElementById('submitTF').classList.remove('d-block')
+        document.getElementById('submitTF').classList.add('d-none')
         if (boolF.innerText === qCorrect) {
             correctAnswer()
         }
@@ -108,12 +75,20 @@ document.querySelector('#questionSkip').addEventListener('click', questionGetter
 
 //Next question button
 document.getElementById('nextQuestion').addEventListener('click', e => {
-    document.getElementById('nextQuestion').classList.add('hidden')
+    document.getElementById('nextQuestion').classList.remove('d-block')
+    document.getElementById('nextQuestion').classList.add('d-none')
     document.getElementById('deleteMe').remove()
     quizGiver()
 })
-//initializing variable to track questions and remaining questions outside of function scopes
-let questionArr, questionRem, qCorrect
+//Get Results button, replaces next question button at end
+document.getElementById('getResults').addEventListener('click', e => {
+    document.getElementById('getResults').classList.remove('d-block')
+    document.getElementById('getResults').classList.add('d-none')
+    document.getElementById('deleteMe').remove()
+    quizGiver()
+})
+//initializing variables to track questions and associated data out of function scopes
+let questionArr, questionRem, questionTot, qCorrect, qScore
 
 //This function gets the questions from the API, no addl params for now
 //this promise took too long to resolve without async functionality to hand to quizGiver
@@ -123,12 +98,17 @@ async function questionGetter(amount = 10) {
     .then(obj => {questionArr = obj.results})
     //this will be 10 for now, to avoid an event error later
     questionRem = 10
+    questionTot = 10
+    qScore = 0
     quizGiver()
 }
 
 //This function will map an array question item onto the buttons
 function quizGiver(questions = 10) {
-    if (questionRem >= 0) {
+    formBool.reset()
+    formMulti.reset()
+    if (questionRem > 0) {
+        document.getElementById('currentQuestion').classList.remove('d-none')
         console.log(questionArr)
         let q = questionArr[questionRem-1]
         //getting the right answer out of the scope and setting the new question
@@ -141,20 +121,38 @@ function quizGiver(questions = 10) {
             multiC.innerText = decodeHTML(mixedArray[2])
             multiD.innerText = decodeHTML(mixedArray[3])
 
-            formMulti.classList.remove('hidden')
-            formBool.classList.add('hidden')
-
-            document.getElementById('submitMulti').classList.remove('hidden')
+            formMulti.classList.remove('d-none')
+            formBool.classList.add('d-none')
+            //bootstrap CSS causes problems if both d-tags are left on
+            document.getElementById('submitMulti').classList.add('d-block')
+            document.getElementById('submitMulti').classList.remove('d-none')
         }
         else if (q.type === 'boolean') {
-            formMulti.classList.add('hidden')
-            formBool.classList.remove('hidden')
+            formMulti.classList.add('d-none')
+            formBool.classList.remove('d-none')
 
-            document.getElementById('submitTF').classList.remove('hidden')
+            document.getElementById('submitTF').classList.add('d-block')
+            document.getElementById('submitTF').classList.remove('d-none')
         }
+        document.querySelector('#numQuestion').innerText = `Trivia Question ${questionTot-questionRem+1} of ${questionTot}`
+        //reducing question remainder upon exiting question creation
+        questionRem--
+        return
     }
-    //reducing question remainder upon exiting question creation
-    questionRem--
+    //hiding quiz elements after getting results
+    formBool.classList.add('d-none')
+    formMulti.classList.add('d-none')
+    document.getElementById('currentQuestion').classList.add('d-none')
+
+    if (qScore === questionTot) {
+        document.querySelector('#numQuestion').innerText = `You got a perfect score! Awesome!`
+    }
+    else if (qScore/questions >= 0.7) {
+        document.querySelector('#numQuestion').innerText = `You got a total of ${qScore} out of ${questionTot}!`
+    }
+    else {
+        document.querySelector('#numQuestion').innerText = `You got a total of ${qScore} out of ${questionTot}.`
+    }
 }
 
 //method i found on stackoverflow to shuffle array entries with each other
@@ -177,27 +175,37 @@ function decodeHTML(string) {
     return text.value
 }
 //set of functions to handle correct/incorrect answer and move on to the next question
-async function correctAnswer(source) {
-    console.log('Correct Answer')
-    const congrats = document.createElement('span')
+function correctAnswer() {
+    qScore++
+    const congrats = document.createElement('p')
     congrats.innerText = 'CORRECT!!!'
     congrats.style.color = 'green'
     congrats.id = 'deleteMe'
-    console.log(congrats)
-    document.querySelector('#answerMessage').append(congrats)
-    document.getElementById('nextQuestion').classList.remove('hidden')
+    congrats.classList.add('d-block', 'w-25', 'text-center', 'm-auto')
+    document.querySelector('#answerMessage').appendChild(congrats)
+    endQButton()
 }
-async function wrongAnswer() {
-    console.log('Wrong Answer')
-    const wahwah = document.createElement('span')
-    wahwah.innerText = 'Wrong Answer'
+function wrongAnswer() {
+    const wahwah = document.createElement('p')
+    wahwah.innerText = 'Sorry, not quite.'
     wahwah.style.color = 'red'
     wahwah.id = 'deleteMe'
-    console.log(wahwah)
+    wahwah.classList.add('d-block', 'w-25', 'text-center', 'm-auto')
     document.querySelector('#answerMessage').appendChild(wahwah)
-    document.getElementById('nextQuestion').classList.remove('hidden')
+    endQButton()
 }
 //error message, probably only goes off in case nothing's selected... for now
 function errorMessage() {
     alert("Did you forget to select an answer?")
+}
+
+//Function to handle what button should be displayed after a question
+function endQButton() {
+    if (questionRem > 0) {
+        document.getElementById('nextQuestion').classList.add('d-block')
+        document.getElementById('nextQuestion').classList.remove('d-none')
+        return
+    }
+    document.getElementById('getResults').classList.add('d-block')
+    document.getElementById('getResults').classList.remove('d-none')
 }
