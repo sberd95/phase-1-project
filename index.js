@@ -13,7 +13,7 @@ const qType = document.getElementById('qType')
 const qNum = document.getElementById('numQuestions')
 
 //initializing variables to track questions and associated data out of function scopes
-let questionArr, questionRem, questionTot, qCorrect, qScore
+let questionArr, questionRem, questionTot, qCorrect, qScore, apiCheck
 
 //Upon page loading, we will populate the categories field in the form using a special API request
 document.addEventListener('DOMContentLoaded', () => {
@@ -48,14 +48,18 @@ document.querySelector('#quizmaker').addEventListener('submit', event => {
 
 //this promise took too long to resolve without async functionality to hand to quizGiver
 async function questionGetter(urlString = 'amount=10') {
+    debugger
     // console.log(urlString)
     await fetch(`https://opentdb.com/api.php?${urlString}`)
     .then(resp => resp.json())
     .then(obj => {
-        if (obj.response_code === 1) {
-            return alert('Not enough questions found, try choosing less questions.')
-        }
+        apiCheck = obj.response_code
         questionArr = obj.results})
+
+    if (apiCheck === 1) {
+        return alert('Not enough questions found, try choosing less questions.')
+    }
+
     qScore = 0
     //this section will work with the quick-start feature
     if (urlString === 'amount=10') {
