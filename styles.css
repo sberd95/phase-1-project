@@ -1,23 +1,27 @@
-/* .hidden {
-    display: none
+.nice-purple {
+    background-color: rgba(173, 32, 255, 0.884)
 }
-
-input[type='submit'] {
-    display:block;
-    margin:auto;
+.nice-dark {
+    background-color: rgb(63, 63, 63)
 }
-
-#currentQuestion {
-    width: 33%;
-    height: auto;
-    padding: 10px;
-    display: block;
-    margin: auto;
+.nice-green {
+    background-color: rgb(0, 199, 116)
 }
-#numQuestion {
-    width: 80%;
-    height: fit-content;
-    padding: 10px;
-    display: block;
-    margin: auto;
-} */
+.nice-blue {
+    background-color: rgb(1, 107, 228)
+}
+.nice-orange {
+    background-color: rgba(255, 102, 0, 0.87)
+}
+.green-correct {
+    background-color: rgb(43, 207, 22)
+}
+.red-incorrect {
+    background-color: rgb(255, 56, 56)
+}
+.nice-yellow {
+    background-color: rgb(255, 218, 56)
+}
+.nice-light {
+    background-color: rgba(236, 236, 236, 0.836)
+}

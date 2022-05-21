@@ -6,43 +6,83 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia Night</title>
+
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link rel="stylesheet" href="styles.css">
     <script defer src="index.js"></script>
 </head>
 
-<header class="bg-secondary mb-1">
-    <h4>Welcome to Trivia Night!</h4>
-    <div>Use the form below to customize your questions</div>
-    <form id='quizmaker' action="" method="GET">
-        <label for="questionNum">Number of Questions?</label>
-        <input type="number" value="10" id="numQuestions">
+<header style="background-image: url('stars.jpg')" class="rounded-bottom m-auto">
+    <h2 class="text-center m-auto w-25 rounded-bottom nice-purple">Welcome to Trivia Night!</h2>
+    <div class="text-center m-auto"><em>Use the options below to customize your questions</em></div>
+
+    <form id='quizmaker' class="rounded nice-light d-block p-1 w-75 m-auto" action="" method="GET">
+        <div class="d-flex justify-content-center">
+            <div class="mr-2">
+                <label for="numQuestions">Number of Questions: </label>
+                <input style="width: 4em" type="number" value="10" id="numQuestions">
+            </div>
+            <div>
+                <label for="category">Category: </label>
+                <select name="category" id="category">
+                    <option value="">Any</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="mr-5">
+                <label for="difficulty">Difficulty: </label>
+                <select name="difficulty" id="difficulty">
+                    <option value="">Any</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <div class="mr-5">
+                <label for="qType">Question Type:</label>
+                <select name="qType" id="qType">
+                    <option value="">Any</option>
+                    <option value="multiple">Multiple Choice</option>
+                    <option value="boolean">True or False</option>
+                </select>
+            </div>
+            <input type="submit">
+        </div>
     </form>
-    <input type="button" id="questionSkip" value="I hate reading!"></input>
+
+    <div class="nice-orange text-center rounded-top p-1 w-25 mt-1 mx-auto">
+        <label for="questionSkip"><b>Quick-Start:</b></label>
+        <input type="button" id="questionSkip" value="I hate reading!"></input>
+    </div>
 </header>
 
-<body class="bg-dark">
-    <h3 id="numQuestion" class="text-center d-block w-50 p-2 m-auto bg-info border border-info rounded-pill">Use the menu above or the quick-button to start your quiz!</h3>
-    <h2 id="currentQuestion" class="d-none text-center m-1 p-1 bg-primary border border-primary rounded"></h2>
+<body class="nice-dark">
+    <h3 id="numQuestion" class="text-center d-block w-50 p-2 mt-3 mx-auto nice-green rounded-pill">Use the
+        menu above or the quick-start button to start your quiz!</h3>
+    <h2 id="currentQuestion" class="d-none text-center m-1 p-1 nice-blue rounded"></h2>
+
     <form id="questionMulti" class="d-none" action="" method="POST">
         <div class="row">
-            <div class="col form-group text-center m-2 p-2 bg-warning" id="divA">
+            <div class="col form-group text-center m-2 p-2 nice-yellow rounded" id="divA">
                 <label id="optionA" class="form-check-label" for="radioA">Example A</label>
                 <input id="radioA" class="form-control form-check w-25 h-auto mx-auto" name="radioMulti" type="radio">
             </div>
-            <div class="col form-group text-center m-2 p-2 bg-warning" id="divB">
+            <div class="col form-group text-center m-2 p-2 nice-yellow rounded" id="divB">
                 <label id="optionB" class="form-check-label" for="radioB">Example B</label>
                 <input id="radioB" class="form-control form-check w-25 h-auto mx-auto" name="radioMulti" type="radio">
             </div>
         </div>
         <div class="row">
-            <div class="col form-group text-center m-2 p-2 bg-warning" id="divC">
+            <div class="col form-group text-center m-2 p-2 nice-yellow rounded" id="divC">
                 <label id="optionC" class="form-check-label" for="radioC">Example C</label>
                 <input id="radioC" class="form-control form-check w-25 h-auto mx-auto" name="radioMulti" type="radio">
             </div>
-            <div class="col form-group text-center m-2 p-2 bg-warning" id="divD">
+            <div class="col form-group text-center m-2 p-2 nice-yellow rounded" id="divD">
                 <label id="optionD" class="form-check-label" for="radioD">Example D</label>
                 <input id="radioD" class="form-control form-check w-25 h-auto mx-auto" name="radioMulti" type="radio">
             </div>
@@ -52,20 +92,23 @@
 
     <form id="questionTF" class="d-none" action="" method="POST">
         <div class="row">
-            <div id="divT" class="col form-group text-center m-2 p-2 bg-warning">
+            <div id="divT" class="col form-group text-center m-2 p-2 nice-yellow rounded">
                 <label id="optionT" class="form-check-label" for="radioT">True</label>
                 <input id="radioT" class="form-control form-check w-25 h-auto mx-auto" name="radioTF" type="radio">
             </div>
-            <div id="divF" class="col form-group text-center m-2 p-2 bg-warning">
+            <div id="divF" class="col form-group text-center m-2 p-2 nice-yellow rounded">
                 <label id="optionF" class="form-check-label" for="radioF">False</label>
                 <input id="radioF" class="form-control form-check w-25 h-auto mx-auto" name="radioTF" type="radio">
             </div>
         </div>
         <input id="submitTF" class="d-block m-auto" type="submit">
     </form>
+    
     <div id="answerMessage"></div>
+    <br>
     <input id="nextQuestion" class="d-none m-auto" type="button" value="Next Question" class="d-none">
     <input id="getResults" class="d-none m-auto" type="button" value="Get Final Score" class="d-none">
+
     <!-- bootstrap scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
